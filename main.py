@@ -33,5 +33,7 @@ if active_page_to_render == "Início":
     home.render(create_qr_code, add_vertical_space)
 elif active_page_to_render == "Exploração":
     exploracao.render()
+elif active_page_to_render == "Alinhamento":
+    alinhamento.render()
 else:
     st.error("Página não reconhecida.")
