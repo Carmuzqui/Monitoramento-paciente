@@ -1,12 +1,12 @@
 import streamlit as st
 from streamlit_option_menu import option_menu
-from menu import home, exploracao
+from menu import home, exploracao, alinhamento
 from utils.helpers import create_qr_code, add_vertical_space
 
 st.set_page_config(page_title="Monitoramento de Sinais Vitais", layout="wide", page_icon="🫁")
 
-menu_options = ["Início", "Exploração"]
-menu_icons = ["house", "activity"]
+menu_options = ["Início", "Exploração", "Alinhamento"]
+menu_icons = ["house", "activity", "activity" ]
 MENU_KEY = "menu_selected_option"
 
 # Gerenciar estado inicial

@@ -173,7 +173,8 @@ def render():
         ax1.plot(df_sensor['datetime'], df_sensor['SpO2'], label=f"SpO₂ - {sensor}", alpha=0.7)
         ax1.plot(df_sensor['datetime'], df_sensor['PR'], label=f"PR bpm - {sensor}", linestyle='dotted', alpha=0.5)
 
-    ax1.plot(df_vitals['datetime'], df_vitals['HeartRate'], label="HeartRate (vitals)", color='black', linestyle='--', alpha=0.6)
+    # ax1.plot(df_vitals['datetime'], df_vitals['HeartRate'], label="HeartRate (vitals)", color='black', linestyle='--', alpha=0.6)
+    ax1.plot(df_vitals['datetime'], df_vitals['HeartRate'], label="HeartRate (vitals)", color='black', linestyle='dotted', alpha=0.6)
 
     ax1.set_ylim(60, 150)
     ax1.set_title("SpO₂, Frequência de Pulso (PR) e Frequência Cardíaca")
