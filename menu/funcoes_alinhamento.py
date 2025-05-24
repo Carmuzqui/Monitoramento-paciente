@@ -31,7 +31,8 @@ def carregar_e_limpar_r3_consolidado(path):
         'SpO2_%_Value_3', 
         'PR_bpm_Value_3', 
         'Pi_Value_3',
-        'Tempo3_segundos'
+        # 'Tempo3_segundos'
+        'Epoch Time'
     ]].copy()
 
     # Renomeia para manter compatibilidade com o código atual
@@ -39,14 +40,15 @@ def carregar_e_limpar_r3_consolidado(path):
         'SpO2_%_Value_3': 'SpO2',
         'PR_bpm_Value_3': 'PR',
         'Pi_Value_3': 'Pi',
-        'Tempo3_segundos': 'Epoch'  # Epoch agora em segundos, mas pode converter para ms se quiser
+        # 'Tempo3_segundos': 'Epoch'  # Epoch agora em segundos, mas pode converter para ms se quiser
+        'Epoch Time': 'Epoch'  # Epoch agora em segundos, mas pode converter para ms se quiser
     }, inplace=True)
 
     # Garante tipo numérico (caso venha algum valor nulo ou string)
     df_r3['SpO2'] = pd.to_numeric(df_r3['SpO2'], errors='coerce')
     df_r3['PR'] = pd.to_numeric(df_r3['PR'], errors='coerce')
     df_r3['Pi'] = pd.to_numeric(df_r3['Pi'], errors='coerce')
-    df_r3['Epoch'] = pd.to_numeric(df_r3['Epoch'], errors='coerce')*1000
+    df_r3['Epoch'] = pd.to_numeric(df_r3['Epoch'], errors='coerce') #*1000
 
     # Filtra como antes
     df_r3_limpo = df_r3[(df_r3['SpO2'] > 90) & (df_r3['Pi'] > 0.3)].copy()
@@ -55,11 +57,34 @@ def carregar_e_limpar_r3_consolidado(path):
 
 
 
-def carregar_vitals(path):
+def carregar_vitals(path, min_hr=40, max_hr=250):
+    """
+    Carrega os dados do arquivo vitals.csv, remove outliers/falsos registros 
+    e imprime estatísticas básicas do filtro.
+    
+    Parâmetros:
+    - path: Caminho para o arquivo vitals.csv
+    - min_hr: Valor mínimo fisiológico esperado de frequência cardíaca
+    - max_hr: Valor máximo fisiológico esperado de frequência cardíaca
+    
+    Retorna:
+    - DataFrame limpo com os dados de vitals
+    """
     df_vitals = pd.read_csv(path)
     df_vitals['TimeStamp'] = pd.to_numeric(df_vitals['TimeStamp (mS)'], errors='coerce')
     df_vitals['HeartRate'] = pd.to_numeric(df_vitals['HeartRate (bpm)'], errors='coerce')
-    return df_vitals
+    
+    total = len(df_vitals)
+    # Mascara: apenas dentro do intervalo fisiológico
+    mask = (df_vitals['HeartRate'] >= min_hr) & (df_vitals['HeartRate'] <= max_hr)
+    df_vitals_limpo = df_vitals[mask].copy()
+    df_vitals_limpo.reset_index(drop=True, inplace=True)
+    filtrados = total - len(df_vitals_limpo)
+    print(f"[carregar_vitals] Registros originais: {total}")
+    print(f"[carregar_vitals] Registros removidos por HeartRate fora de [{min_hr},{max_hr}]: {filtrados}")
+    print(f"[carregar_vitals] Registros finais: {len(df_vitals_limpo)}")
+    return df_vitals_limpo
+
 
 def ajuste_tempo_zero(df_r3, df_vitals):
     tempo_inicial_r3 = df_r3['Epoch'].min()
@@ -121,7 +146,7 @@ def alinhar_sensores_heuristico(df_r3, df_vitals, num_pontos_aleatorios=20, max_
     pontos_aleatorios = df_vitals.iloc[indices_aleatorios]
     min_comparacoes = min(int(len(df_r3) * min_comparacoes_percentual), int(len(df_vitals) * min_comparacoes_percentual))
     resultados = []
-    num_penalizacoes = 50
+    num_penalizacoes = len(df_vitals)
     for _, ponto_vitals in pontos_aleatorios.iterrows():
         valor_vitals = ponto_vitals['HeartRate']
         tempo_vitals = ponto_vitals['tempo_relativo']
@@ -133,6 +158,7 @@ def alinhar_sensores_heuristico(df_r3, df_vitals, num_pontos_aleatorios=20, max_
                 df_r3, df_vitals, desfase, max_diff_tempo, limiar_penalizacao, num_penalizacoes
             )
             num_penalizacoes = metricas['num_penalizacoes']
+            print(num_penalizacoes)
             if metricas['num_comparacoes'] >= min_comparacoes:
                 resultados.append(metricas)
     if not resultados:
