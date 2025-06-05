@@ -12,18 +12,18 @@ def render(create_qr_code=None, add_vertical_space=None):
     with col1:
         st.markdown("### 🎯 Contexto")
         st.markdown("""
-        Devido a cortes previstos no programa de pesquisa, será necessário otimizar o uso dos sensores tipo **R**.  
-        Atualmente usamos **3 sensores R** e **1 sensor Vital**, que fornece o **MAP (Pressão Arterial Média)** como referência.
+        - Devido a cortes previstos no programa de pesquisa, será necessário otimizar o uso dos sensores tipo **R**.  
+        - Atualmente usamos **3 sensores R** e **1 sensor Vital**, que fornece o **MAP (Pressão Arterial Média)** como referência.
         """)
 
         st.markdown("### ❗ Problema")
         st.markdown("""
-        Com menos recursos disponíveis, precisamos reduzir o número de sensores R sem comprometer a qualidade dos dados fisiológicos coletados.
+        - Com menos recursos disponíveis, precisamos reduzir o número de sensores R sem comprometer a qualidade dos dados fisiológicos coletados.
         """)
 
         st.markdown("### 🧠 Objetivo")
         st.markdown("""
-        Avaliar qual dos sensores R, em sua posição específica, fornece a melhor estimativa do **MAP** medido pelo sensor Vital.
+        - Avaliar qual dos sensores R, em sua posição específica, fornece a melhor estimativa do **MAP** medido pelo sensor Vital.
         """)
 
     # Segunda coluna: Abordagem e Benefícios
