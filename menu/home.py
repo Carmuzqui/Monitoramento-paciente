@@ -48,10 +48,10 @@ def render(create_qr_code=None, add_vertical_space=None):
         add_vertical_space(2)
 
     # Exibição do QR code opcional (com verificação de None)
-    if create_qr_code:
-        st.markdown("### 🔗 Acesso rápido ao projeto")
-        qr_img = create_qr_code("https://seu-link-do-projeto.com")
-        if qr_img is not None:
-            st.image(qr_img, caption="Acesse o painel completo", width=8) 
-        else:
-            st.warning("QR code não pôde ser gerado.")
+    # if create_qr_code:
+    #     st.markdown("### 🔗 Acesso rápido ao projeto")
+    #     qr_img = create_qr_code("https://seu-link-do-projeto.com")
+    #     if qr_img is not None:
+    #         st.image(qr_img, caption="Acesse o painel completo", width=8) 
+    #     else:
+    #         st.warning("QR code não pôde ser gerado.")
