@@ -360,7 +360,7 @@ def render():
             hoverongaps=False,
             text=z_text,
             texttemplate="%{text}",
-            textfont=dict(size=14, color="white")
+            textfont=dict(size=16, color="black")
         ))
 
         fig_heat.update_layout(

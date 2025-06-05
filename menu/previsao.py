@@ -456,7 +456,7 @@ def carregar_dados():
         return dfs_r, filtered_vitals, True
 
 def render():
-    st.markdown("<h2 style='text-align: center; font-size: 32px;'>Estimativa da MAP a partir de sensores R</h2>", unsafe_allow_html=True)
+    st.markdown("<h2 style='text-align: center; font-size: 32px;'>Estimativa da MAP a partir das variáveis PR e Pi de sensores R</h2>", unsafe_allow_html=True)
     
     dfs_r, df_vitals, vitals_filtered = carregar_dados()
     sensores = [k for k in dfs_r.keys() if not k.endswith('_filtered')]
@@ -548,7 +548,7 @@ def render():
                 x=y_test, 
                 y=y_test_pred,
                 mode='markers',
-                marker=dict(color='blue', size=10, opacity=0.5),
+                marker=dict(color='black', size=10, opacity=0.5),
                 name='Pontos de teste'
             ))
             
@@ -560,7 +560,7 @@ def render():
                 x=[min_val, max_val],
                 y=[min_val, max_val],
                 mode='lines',
-                line=dict(color='red', dash='dash', width=3),
+                line=dict(color='orange', dash='dash', width=3),
                 name='Linha ideal'
             ))
             
@@ -606,7 +606,7 @@ def render():
                 mode='lines+markers',
                 name='MAP Real',
                 line=dict(color='blue', width=3),
-                marker=dict(size=8)
+                marker=dict(size=5)
             ))
             
             fig_time.add_trace(go.Scatter(
@@ -615,7 +615,7 @@ def render():
                 mode='lines+markers',
                 name='MAP Estimada',
                 line=dict(color='red', width=3),
-                marker=dict(size=8)
+                marker=dict(size=5)
             ))
             
             # Configuración con texto más grande
