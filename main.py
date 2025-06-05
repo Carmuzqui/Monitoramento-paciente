@@ -48,8 +48,9 @@ from utils.helpers import create_qr_code, add_vertical_space
 
 st.set_page_config(page_title="Monitoramento de Sinais Vitais", layout="wide", page_icon="🫁")
 
-menu_options = ["Início", "Alinhamento", "Exploração", "Previsão"]  # <-- añade Previsão
-menu_icons = ["house", "activity", "activity", "bar-chart"]
+# menu_options = ["Início", "Alinhamento", "Exploração", "Previsão"]  # <-- añade Previsão
+menu_options = ["Início", "Exploração", "Estimativa da MAP"]
+menu_icons = ["house", "bar-chart", "activity"]
 MENU_KEY = "menu_selected_option"
 
 # Gerenciar estado inicial
@@ -76,9 +77,9 @@ if active_page_to_render == "Início":
     home.render(create_qr_code, add_vertical_space)
 elif active_page_to_render == "Exploração":
     exploracao.render()
-elif active_page_to_render == "Alinhamento":
-    alinhamento.render()
-elif active_page_to_render == "Previsão":
+# elif active_page_to_render == "Alinhamento":
+#     alinhamento.render()
+elif active_page_to_render == "Estimativa da MAP":
     previsao.render()
 else:
     st.error("Página não reconhecida.")
