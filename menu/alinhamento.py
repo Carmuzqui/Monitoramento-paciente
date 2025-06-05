@@ -16,7 +16,7 @@ def render():
     st.markdown("# 🔍 Alinhamento de sensores")
     try:
         # df_r3 = carregar_e_limpar_r3("data/R3.csv")
-        df_r3 = carregar_e_limpar_r3_consolidado("data/R_consolidado.csv")
+        df_r3 = carregar_e_limpar_r3_consolidado("data/R_alinhados.csv")
         df_vitals = carregar_vitals("data/vitals.csv")
         st.subheader("Informações dos dados")
         col1, col2 = st.columns(2)
