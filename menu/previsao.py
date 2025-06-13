@@ -286,6 +286,14 @@ def render():
                     font=dict(size=16)  # Tamaño de fuente de la leyenda
                 )
             )
+
+
+            ymax = df_test_results[['MAP_real', 'MAP_estimado']].values.max()
+            fig_time.update_yaxes(
+                title_font=dict(size=20, color="black"),
+                tickfont=dict(size=16, color="black"),
+                range=[0, ymax*1.05]  # 5% arriba del máximo observado
+            )
             
             # Aumentar tamaño de los títulos de los ejes
             fig_time.update_xaxes(title_font=dict(size=20, color="black"), tickfont=dict(size=16, color="black"))
